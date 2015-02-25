@@ -1,0 +1,25 @@
+apply plugin: 'application'
+
+mainClassName = "${group}.dw.Main"
+applicationDefaultJvmArgs = [
+    "-javaagent:${configurations.quasar.singleFile}",
+    "-Dco.paralleluniverse.fibers.verifyInstrumentation=true",
+    "-Ddropwizard.config=build/resources/main/conf.yml"
+]
+
+dependencies {
+    compile ("co.paralleluniverse:comsat-dropwizard:$comsatVer") {
+        // Exclude Jersey 1.x's runtime by default, Tomcat uses 2.x
+/*        exclude group: 'com.sun.jersey', module: 'jersey-core'
+        exclude group: 'com.sun.jersey', module: 'jersey-server'
+        exclude group: 'com.sun.jersey', module: 'jersey-servlet'
+        exclude group: 'com.sun.jersey', module: 'jersey-client' */
+    }
+    compile ("io.dropwizard:dropwizard-core:$dropwizardVer") {
+        // Exclude Jersey 1.x's runtime by default, Tomcat uses 2.x
+/*        exclude group: 'com.sun.jersey', module: 'jersey-core'
+        exclude group: 'com.sun.jersey', module: 'jersey-server'
+        exclude group: 'com.sun.jersey', module: 'jersey-servlet'
+        exclude group: 'com.sun.jersey', module: 'jersey-client' */
+    }
+}

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+    <!--link to the global db resource-->
+    <ResourceLink name="jdbc/appds"
+                  global="jdbc/globalds"
+                  type="javax.sql.DataSource" />
+</Context>

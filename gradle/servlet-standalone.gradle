@@ -1,0 +1,19 @@
+apply plugin: 'war'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.bmuschko:gradle-cargo-plugin:2.0.3'
+    }
+}
+
+apply plugin: 'com.bmuschko.cargo-base'
+
+dependencies {
+    def cargoVersion = '1.4.5'
+    cargo "org.codehaus.cargo:cargo-core-uberjar:$cargoVersion",
+            "org.codehaus.cargo:cargo-ant:$cargoVersion"
+}
