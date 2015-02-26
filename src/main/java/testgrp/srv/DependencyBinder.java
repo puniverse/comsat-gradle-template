@@ -11,6 +11,6 @@ public class DependencyBinder extends AbstractBinder {
     @Override
     protected void configure() {
         // Replace with your favourite persistence engine impl
-        bind(FiberJDBCPersistenceServiceImpl.class).to(PersistenceService.class);
+        bind(JDBCPersistenceServiceImpl.class).to(PersistenceService.class);
     }
 }

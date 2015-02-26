@@ -7,6 +7,5 @@ ext.tomcat7Ver      = '7.0.59'
 ext.tomcat8Ver      = '8.0.20'
 ext.containerPort   = 8080
 
-ext.classifier      = ':jdk8' // ''
 sourceCompatibility = 1.8     // 1.7
 targetCompatibility = 1.8     // 1.7

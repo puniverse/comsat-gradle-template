@@ -1,7 +1,5 @@
 package testgrp.srv;
 
-import co.paralleluniverse.fibers.Fiber;
-import co.paralleluniverse.fibers.SuspendExecution;
 import java.io.IOException;
 
 import javax.inject.Inject;
@@ -31,14 +29,14 @@ public class Resource {
     @GET
     @Path("hello")
     @Produces(MediaType.TEXT_PLAIN)
-    public String hello() throws SuspendExecution, InterruptedException {
+    public String hello() {
         return "Hello world!";
     }
 
     @GET
     @Path("checkRO")
     @Produces(MediaType.TEXT_PLAIN)
-    public String checkRO() throws SuspendExecution, InterruptedException, IOException {
+    public String checkRO() throws IOException, InterruptedException {
         final Timer.Context context = timer.time();
         final Boolean res = new Boolean(ps.checkRO());
         context.stop();
@@ -48,7 +46,7 @@ public class Resource {
     @POST
     @Path("data")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void store(Data data) throws IOException, InterruptedException, SuspendExecution  {
+    public void store(Data data) throws IOException, InterruptedException {
         ps.store(data);
     }
 }

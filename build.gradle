@@ -15,7 +15,6 @@ apply from: 'gradle/props.gradle'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 configurations {
-    quasar
     provided
 }
 
@@ -67,24 +66,18 @@ dependencies {
     compile "com.squareup.dagger:dagger:$daggerVer"
     compile "com.squareup.dagger:dagger-compiler:$daggerVer"
     compile "org.glassfish.jersey.core:jersey-server:$jerseyVer"
-    compile "co.paralleluniverse:comsat-jdbi:$comsatVer"
+    compile "org.glassfish.jersey.containers:jersey-container-servlet:$jerseyVer"
     compile "com.netflix.feign:feign-core:$feignVer"
+    compile "org.apache.httpcomponents:httpclient:$httpClientVer"
     compile ("com.netflix.feign:feign-jaxrs:$feignVer") {
         exclude group: 'javax.ws.rs', module: 'jsr311-api'
     }
     compile ("com.netflix.feign:feign-jackson:$feignVer") {
         exclude group: 'com.fasterxml.jackson.core', module: 'jackson-databind'
     }
-    compile "co.paralleluniverse:quasar-core:$quasarVer"
-    compile "co.paralleluniverse:comsat-jersey-server:$comsatVer"
-    compile "co.paralleluniverse:comsat-jdbc:$comsatVer"
     compile "org.glassfish.jersey.media:jersey-media-json-jackson:$jerseyVer"
 
     provided "javax.servlet:javax.servlet-api:$servletVer"
-    provided "co.paralleluniverse:comsat-tomcat-loader:${comsatVer}${classifier}"
-
-    quasar "co.paralleluniverse:quasar-core:${quasarVer}${classifier}@jar"
-
     runtime fileTree(dir: 'lib', include: '*.jar')
 
     testCompile "junit:junit:$junitVer"

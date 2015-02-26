@@ -6,13 +6,11 @@
          metadata-complete="false"> <!-- Will scan libs for servlet annotations as well, default -->
     <display-name>Cargo Archetype Web Application Single Module</display-name>
 
-    <!-- Register the fiber-blocking Jersey servlet -->
+    <!-- Register the thread-blocking Jersey servlet -->
     <servlet>
-        <display-name>fiber</display-name>
-        <servlet-name>fiber</servlet-name>
-        <!-- Support async (needed by fiber-blocking) -->
-        <servlet-class>co.paralleluniverse.fibers.jersey.ServletContainer</servlet-class>
-        <async-supported>true</async-supported>
+        <display-name>servlet</display-name>
+        <servlet-name>servlet</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
         <!-- Add Jersey configuration class -->
         <init-param>
             <param-name>javax.ws.rs.Application</param-name>
@@ -29,14 +27,14 @@
 
     <!-- Mapping -->
     <servlet-mapping>
-        <servlet-name>fiber</servlet-name>
-        <url-pattern>/fiber-jaxrs/*</url-pattern>
+        <servlet-name>servlet</servlet-name>
+        <url-pattern>/thread-jaxrs/*</url-pattern>
     </servlet-mapping>
 
     <!-- Datasource -->
     <resource-ref>
         <description>DB Connection</description>
-        <res-ref-name>jdbc/fiberds</res-ref-name>
+        <res-ref-name>jdbc/appds</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Container</res-auth>
     </resource-ref>

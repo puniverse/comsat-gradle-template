@@ -17,14 +17,6 @@ cargo {
             toDir = file('/conf')
         }
         file {
-            file = file("${configurations.comsatTomcatLoader.singleFile}")
-            toDir = file('/common/lib')
-        }
-        file {
-            file = file("${configurations.comsatJdbc.singleFile}")
-            toDir = file('/common/lib')
-        }
-        file {
             file = file("${configurations.h2.singleFile}")
             toDir = file('/common/lib')
         }

@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
-    <!-- Load the webApp with class loader for instrumentation purposes-->
-    <Loader loaderClass="co.paralleluniverse.comsat.tomcat.QuasarWebAppClassLoader" />
-
     <!--link to the global db resource-->
-    <ResourceLink name="jdbc/linkds"
+    <ResourceLink name="jdbc/appds"
                   global="jdbc/globalds"
                   type="javax.sql.DataSource" />
-
-    <!--wrap the linked global db resource by fiber wrapper-->
-    <Resource name="jdbc/fiberds" auth="Container"
-              type="javax.sql.DataSource"
-              rawDataSource="jdbc/linkds"
-              threadsCount="10"
-              url="fiber"
-              factory="co.paralleluniverse.fibers.jdbc.FiberDataSourceFactory"
-            />
 </Context>

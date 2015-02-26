@@ -2,14 +2,12 @@ apply plugin: 'application'
 
 mainClassName = "${group}.dw.Main"
 applicationDefaultJvmArgs = [
-    "-javaagent:${configurations.quasar.singleFile}",
-    // "-Dco.paralleluniverse.fibers.verifyInstrumentation=true",
     "-Ddropwizard.config=build/resources/main/conf.yml"
 ]
 
 dependencies {
-    compile "co.paralleluniverse:comsat-dropwizard:$comsatVer"
     compile "io.dropwizard:dropwizard-core:$dropwizardVer"
+    compile "io.dropwizard:dropwizard-jdbi:$dropwizardVer"
 }
 
 sourceSets {
