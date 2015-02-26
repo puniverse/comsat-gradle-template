@@ -1,8 +1,15 @@
+server:
+  maxThreads: 200
+  minThreads: 200
+  maxQueuedRequests: 9999
+  requestLog:
+    appenders: []
+
 template: Hello, %s!
 defaultName: Stranger
 
 database:
-  driverClass: org.h2.Driver
-  url: jdbc:h2:mem:test
+  driverClass: co.paralleluniverse.fibers.jdbc.FiberDriver
+  url: jdbc:fiber:h2:mem:test
   user: u
   password: p

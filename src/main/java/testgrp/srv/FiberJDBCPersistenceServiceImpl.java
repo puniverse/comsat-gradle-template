@@ -1,5 +1,7 @@
 package testgrp.srv;
 
+import co.paralleluniverse.fibers.SuspendExecution;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -9,11 +11,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- * Thread-blocking JDBC implementation of the {@link testgrp.srv.PersistenceService}
+ * Fiber-blocking JDBC implementation of the {@link PersistenceService}
  *
  * @author circlespainter
  */
-public class JDBCPersistenceServiceImpl implements PersistenceService {
+public class FiberJDBCPersistenceServiceImpl implements PersistenceService {
 
     private DataSource ds;
 
@@ -22,7 +24,7 @@ public class JDBCPersistenceServiceImpl implements PersistenceService {
             if (ds == null) {
                 Context initCtx = new InitialContext();
                 Context envCtx = (Context) initCtx.lookup("java:comp/env");
-                this.ds = (DataSource) envCtx.lookup("jdbc/appds");
+                this.ds = (DataSource) envCtx.lookup("jdbc/fiberds");
             }
         } catch (final NamingException ne) {
             throw new RuntimeException(ne);
@@ -30,13 +32,13 @@ public class JDBCPersistenceServiceImpl implements PersistenceService {
     }
 
     @Override
-    public void store(Data pb) throws IOException  {
+    public void store(Data pb) throws IOException, InterruptedException, SuspendExecution  {
         init();
         // TODO
     }
 
     @Override
-    public boolean checkRO() throws IOException {
+    public boolean checkRO() throws IOException, InterruptedException, SuspendExecution {
         init();
         try (final Connection c = ds.getConnection()) {
             return c.getMetaData().isReadOnly();

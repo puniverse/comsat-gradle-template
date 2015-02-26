@@ -1,5 +1,10 @@
 package testgrp.dw;
 
+import co.paralleluniverse.fibers.Fiber;
+import co.paralleluniverse.fibers.SuspendExecution;
+import co.paralleluniverse.fibers.Suspendable;
+import co.paralleluniverse.fibers.dropwizard.FiberApplication;
+import co.paralleluniverse.fibers.dropwizard.FiberDBIFactory;
 import com.codahale.metrics.*;
 import com.codahale.metrics.annotation.*;
 import com.fasterxml.jackson.annotation.*;
@@ -11,7 +16,6 @@ import feign.Feign;
 import feign.jackson.*;
 import feign.jaxrs.*;
 import io.dropwizard.db.*;
-import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.*;
 import java.sql.*;
 import java.util.*;
@@ -29,7 +33,7 @@ import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.tweak.*;
 
-public class Main extends io.dropwizard.Application<Main.JModernConfiguration> {
+public class Main extends FiberApplication<Main.JModernConfiguration> {
     public static void main(String[] args) throws Exception {
         new Main().run(new String[]{"server", System.getProperty("dropwizard.config")});
     }
@@ -39,7 +43,7 @@ public class Main extends io.dropwizard.Application<Main.JModernConfiguration> {
     }
 
     @Override
-    public void run(JModernConfiguration cfg, Environment env) throws ClassNotFoundException {
+    public void fiberRun(JModernConfiguration cfg, Environment env) throws ClassNotFoundException {
         JmxReporter.forRegistry(env.metrics()).build().start(); // Manually add JMX reporting (Dropwizard regression)
 
         ObjectGraph objectGraph = ObjectGraph.create(new ModernModule(cfg));
@@ -51,7 +55,7 @@ public class Main extends io.dropwizard.Application<Main.JModernConfiguration> {
                 .decoder(new JacksonDecoder());
         env.jersey().register(new ConsumerResource(feignBuilder));
 
-        final IDBI dbi = new DBIFactory().build(env, cfg.getDataSourceFactory(), "db");
+        final IDBI dbi = new FiberDBIFactory().build(env, cfg.getDataSourceFactory(), "db");
         env.jersey().register(new DBResource(dbi));
     }
 
@@ -78,10 +82,11 @@ public class Main extends io.dropwizard.Application<Main.JModernConfiguration> {
 
         @Timed // monitor timing of this service with Metrics
         @GET
+        @Suspendable
         public Saying sayHello(@QueryParam("name") Optional<String> name) throws InterruptedException {
             final String value = String.format(template, name.or(defaultName));
             try {
-                Thread.sleep(ThreadLocalRandom.current().nextInt(10, 500));
+                Fiber.sleep(ThreadLocalRandom.current().nextInt(10, 500));
             } catch (Throwable t) {
                 throw new AssertionError(t);
             }
@@ -100,6 +105,7 @@ public class Main extends io.dropwizard.Application<Main.JModernConfiguration> {
 
         @Timed
         @GET
+        @Suspendable
         public String consume() {
             Saying saying = helloWorld.hi("consumer");
             return String.format("The service is saying: %s (id: %d)",  saying.getContent(), saying.getId());
@@ -123,19 +129,19 @@ public class Main extends io.dropwizard.Application<Main.JModernConfiguration> {
 
         @Timed
         @POST @Path("/add")
-        public Something add(String name) {
+        public Something add(String name) throws SuspendExecution {
             return find(dao.insert(name));
         }
 
         @Timed
         @GET @Path("/item/{id}")
-        public Something find(@PathParam("id") Integer id) {
+        public Something find(@PathParam("id") Integer id) throws SuspendExecution {
             return dao.findById(id);
         }
 
         @Timed
         @GET @Path("/all")
-        public List<Something> all(@PathParam("id") Integer id) {
+        public List<Something> all(@PathParam("id") Integer id) throws SuspendExecution {
             return dao.all();
         }
     }

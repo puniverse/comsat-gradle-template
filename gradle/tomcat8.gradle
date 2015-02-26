@@ -1,1 +1,32 @@
 apply from: 'gradle/servlet-standalone.gradle'
+
+cargo {
+    containerId = 'tomcat8x'
+    port = containerPort
+
+    local {
+        jvmArgs = tomcatJvmArgs
+
+        installer {
+            installUrl = "http://www.us.apache.org/dist/tomcat/tomcat-8/v${tomcat8Ver}/bin/apache-tomcat-${tomcat8Ver}.zip"
+            downloadDir = file("$buildDir/download")
+            extractDir = file("$buildDir/extract")
+        }
+        configFile {
+            file = file('tomcat/8x/conf/server.xml')
+            toDir = file('/conf')
+        }
+        file {
+            file = file("${configurations.comsatTomcatLoader.singleFile}")
+            toDir = file('/common/lib')
+        }
+        file {
+            file = file("${configurations.comsatJdbc.singleFile}")
+            toDir = file('/common/lib')
+        }
+        file {
+            file = file("${configurations.h2.singleFile}")
+            toDir = file('/common/lib')
+        }
+    }
+}

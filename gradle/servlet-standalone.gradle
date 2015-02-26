@@ -1,19 +1,48 @@
 apply plugin: 'war'
+apply plugin: 'com.bmuschko.cargo'
 
-buildscript {
-    repositories {
-        jcenter()
-    }
-
-    dependencies {
-        classpath 'com.bmuschko:gradle-cargo-plugin:2.0.3'
-    }
+configurations {
+    comsatTomcatLoader
+    comsatJdbc
+    h2
 }
-
-apply plugin: 'com.bmuschko.cargo-base'
 
 dependencies {
-    def cargoVersion = '1.4.5'
-    cargo "org.codehaus.cargo:cargo-core-uberjar:$cargoVersion",
-            "org.codehaus.cargo:cargo-ant:$cargoVersion"
+    // Exclude Jersey 1.x's runtime by default, Tomcat uses 2.x
+    compile ("co.paralleluniverse:comsat-dropwizard:$comsatVer") {
+        exclude group: 'com.sun.jersey', module: 'jersey-core'
+        exclude group: 'com.sun.jersey', module: 'jersey-server'
+        exclude group: 'com.sun.jersey', module: 'jersey-servlet'
+        exclude group: 'com.sun.jersey', module: 'jersey-client'
+    }
+    compile ("io.dropwizard:dropwizard-core:$dropwizardVer") {
+        exclude group: 'com.sun.jersey', module: 'jersey-core'
+        exclude group: 'com.sun.jersey', module: 'jersey-server'
+        exclude group: 'com.sun.jersey', module: 'jersey-servlet'
+        exclude group: 'com.sun.jersey', module: 'jersey-client'
+    }
+
+    comsatTomcatLoader "co.paralleluniverse:comsat-tomcat-loader:${comsatVer}${classifier}@jar"
+    comsatJdbc "co.paralleluniverse:comsat-jdbc:$comsatVer@jar"
+    h2 files('lib/h2-1.4.185.jar')
+
+    def cargoVersion = '1.4.12'
+    cargo "org.codehaus.cargo:cargo-core-uberjar:$cargoVersion", "org.codehaus.cargo:cargo-ant:$cargoVersion"
 }
+
+cargoRunLocal.dependsOn assemble
+cargoStartLocal.dependsOn assemble
+
+tasks.withType(Test) {
+    dependsOn cargoStartLocal
+
+    // systemProperty 'co.paralleluniverse.fibers.verifyInstrumentation', 'true'
+    jvmArgs "-javaagent:${configurations.quasar.singleFile}", "-Dservlet.port=$containerPort", "-Dapp.base=${project.name}-${project.version}" // =v, =d
+}
+
+ext.tomcatJvmArgs =
+    "-server -Xmixed -XX:+TieredCompilation -XX:+AggressiveOpts -Xmx1024m -Dco.paralleluniverse.fibers.disableAgentWarning"
+/*
+    -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005
+    -Dco.paralleluniverse.fibers.verifyInstrumentation=true
+*/

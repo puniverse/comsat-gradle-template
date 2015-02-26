@@ -1,7 +1,4 @@
-group               = "testgrp"
-version             = "0.1.0-SNAPSHOT"
-status              = "integration"
-description         = "TODO - Pls. edit - Gradle bootstrap project for Comsat"
+apply from: 'gradle/user-props.gradle'
 
 ext.h2Ver           = '1.4.185'
 ext.dropwizardVer   = '0.7.1'
@@ -16,5 +13,3 @@ ext.junitVer        = '4.12'
 ext.guavaVer        = '18.0'
 ext.jacksonVer      = '2.3.3'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8

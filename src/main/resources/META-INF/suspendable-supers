@@ -1,0 +1,3 @@
+testgrp.dw.Main$ModernDAO.insert
+testgrp.dw.Main$ModernDAO.findById
+testgrp.dw.Main$ModernDAO.all
