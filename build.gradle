@@ -75,6 +75,19 @@ dependencies {
     compile ("com.netflix.feign:feign-jackson:$feignVer") {
         exclude group: 'com.fasterxml.jackson.core', module: 'jackson-databind'
     }
+    // Exclude Jersey 1.x's runtime by default, Tomcat uses 2.x
+    compile ("co.paralleluniverse:comsat-dropwizard:$comsatVer") {
+        exclude group: 'com.sun.jersey', module: 'jersey-core'
+        exclude group: 'com.sun.jersey', module: 'jersey-server'
+        exclude group: 'com.sun.jersey', module: 'jersey-servlet'
+        exclude group: 'com.sun.jersey', module: 'jersey-client'
+    }
+    compile ("io.dropwizard:dropwizard-core:$dropwizardVer") {
+        exclude group: 'com.sun.jersey', module: 'jersey-core'
+        exclude group: 'com.sun.jersey', module: 'jersey-server'
+        exclude group: 'com.sun.jersey', module: 'jersey-servlet'
+        exclude group: 'com.sun.jersey', module: 'jersey-client'
+    }
     compile "co.paralleluniverse:quasar-core:$quasarVer"
     compile "co.paralleluniverse:comsat-jersey-server:$comsatVer"
     compile "co.paralleluniverse:comsat-jdbc:$comsatVer"

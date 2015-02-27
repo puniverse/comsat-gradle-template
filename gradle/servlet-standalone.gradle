@@ -8,20 +8,6 @@ configurations {
 }
 
 dependencies {
-    // Exclude Jersey 1.x's runtime by default, Tomcat uses 2.x
-    compile ("co.paralleluniverse:comsat-dropwizard:$comsatVer") {
-        exclude group: 'com.sun.jersey', module: 'jersey-core'
-        exclude group: 'com.sun.jersey', module: 'jersey-server'
-        exclude group: 'com.sun.jersey', module: 'jersey-servlet'
-        exclude group: 'com.sun.jersey', module: 'jersey-client'
-    }
-    compile ("io.dropwizard:dropwizard-core:$dropwizardVer") {
-        exclude group: 'com.sun.jersey', module: 'jersey-core'
-        exclude group: 'com.sun.jersey', module: 'jersey-server'
-        exclude group: 'com.sun.jersey', module: 'jersey-servlet'
-        exclude group: 'com.sun.jersey', module: 'jersey-client'
-    }
-
     comsatTomcatLoader "co.paralleluniverse:comsat-tomcat-loader:${comsatVer}${classifier}@jar"
     comsatJdbc "co.paralleluniverse:comsat-jdbc:$comsatVer@jar"
     h2 files('lib/h2-1.4.185.jar')
