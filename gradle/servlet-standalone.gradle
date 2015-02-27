@@ -6,20 +6,6 @@ configurations {
 }
 
 dependencies {
-    // Exclude Jersey 1.x's runtime by default, Tomcat uses 2.x
-    compile ("io.dropwizard:dropwizard-core:$dropwizardVer") {
-        exclude group: 'com.sun.jersey', module: 'jersey-core'
-        exclude group: 'com.sun.jersey', module: 'jersey-server'
-        exclude group: 'com.sun.jersey', module: 'jersey-servlet'
-        exclude group: 'com.sun.jersey', module: 'jersey-client'
-    }
-    compile ("io.dropwizard:dropwizard-jdbi:$dropwizardVer") {
-        exclude group: 'com.sun.jersey', module: 'jersey-core'
-        exclude group: 'com.sun.jersey', module: 'jersey-server'
-        exclude group: 'com.sun.jersey', module: 'jersey-servlet'
-        exclude group: 'com.sun.jersey', module: 'jersey-client'
-    }
-
     h2 files('lib/h2-1.4.185.jar')
 
     def cargoVersion = '1.4.12'
