@@ -9,9 +9,9 @@
 
 - Comsat is an integration framework for the JVM that tailors the performance and scalability of Quasar to the daily needs of application developers.
 
-- It does so by either integrating popular pre-existing Java technologies or by introducing new and innovative APIs.
+- Comsat either integrates pre-existing Java technologies or introduces innovative APIs, like Web Actors.
 
-- With Comsat and Quasar you get the same performance and scalability as all the asynchronous frameworks out there but you can still use a simple, sequential and familiar coding style rather than de-structuring your program into a maze of callbacks.
+- With Comsat and Quasar you get the same performance and scalability as all the asynchronous frameworks out there, but you can still use a simple, sequential and familiar coding style rather than de-structuring your program into a maze of callbacks.
 
 - Plus, you can still use the libraries and tools you already know.
 
@@ -42,7 +42,7 @@
 
 - Since we're interested in just bootstrapping our own project, and not working on the template itself, we can use GitHub's Subversion support to export the template without any version control information.
 
-- We can SVN-export the whole repository including both the `master` and the `without-comsat` branch, so you can even diff them to see what the differences are:
+- We can SVN-export the whole repository including both the `master` and the `without-comsat` branch, so that we can diff them to see what the differences are:
 
 ```
 svn export https://github.com/puniverse/comsat-gradle-template
