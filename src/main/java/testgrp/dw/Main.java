@@ -150,13 +150,13 @@ public class Main extends FiberApplication<Main.JModernConfiguration> {
     public interface ModernDAO {
         @SqlUpdate("insert into something (name) values (:name)")
         @GetGeneratedKeys
-        int insert(@Bind("name") String name);
+        int insert(@Bind("name") String name) throws SuspendExecution;
 
         @SqlQuery("select * from something where id = :id")
-        Something findById(@Bind("id") int id);
+        Something findById(@Bind("id") int id) throws SuspendExecution;
 
         @SqlQuery("select * from something")
-        List<Something> all();
+        List<Something> all() throws SuspendExecution;
     }
 
     public static class Something {
