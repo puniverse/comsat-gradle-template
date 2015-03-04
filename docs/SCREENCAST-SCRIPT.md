@@ -11,7 +11,7 @@
 
 - Comsat either integrates pre-existing Java technologies or introduces innovative APIs, like Web Actors.
 
-- With Comsat and Quasar you get the same performance and scalability as all the asynchronous frameworks out there, but you can still use a simple, sequential and familiar coding style rather than de-structuring your program into a maze of callbacks.
+- With Comsat and Quasar you get the same performance and scalability of all the asynchronous frameworks out there, but you can still use a simple, sequential and familiar coding style rather than de-structuring your program into a maze of callbacks.
 
 - Plus, you can still use the libraries and tools you already know.
 
@@ -148,13 +148,7 @@ svn export https://github.com/puniverse/comsat-gradle-template
 
   - Let's make our DAO methods suspendable by adding `throws SuspendExecution` to `add`, `find` and `all`.
 
-  - Finally, let's update the Dropwizard configuration file to tune the server so it can take advantage of fibers to serve more concurrent requests and to use the fiber-enabled JDBC driver:
-
-- If we run the application now, we'll get a verification exception because Quasar will find that some methods still miss instrumentation. Since I have already been through that check, I'll spare some time now and will directly create the needed files:
-
-  - `src/main/resources/META-INF/suspendable-supers` for suspendable interfaces, we only have the DAO:
-
-  - We also need `src/main/resources/META-INF/suspendables` because JDBI will generate a dynamic proxy for our DAO implementation at runtime, and we need to make its methods suspendable too. We can't do through annotations or `throws` clauses because it's dynamically generated code:
+  - Finally, let's update the Dropwizard configuration file to tune the server so it can take advantage of fibers to serve more concurrent requests and to use the fiber-enabled JDBC driver.
 
 - Let's run the application again with `./gradlew -Penv=dropwizard run` and let's check a few URLs:
   - http://localhost:8080/hello-world
