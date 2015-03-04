@@ -109,7 +109,7 @@ svn export https://github.com/puniverse/comsat-gradle-template
 
 ## DIR DIFF - Porting the Dropwizard embedded webapp to Comsat
 
-(Prepare simplified versions for diff, open in IntelliJ idea with diff dialog and set prj source level to 1.8)
+(Open in IntelliJ idea with diff dialog and set prj source level to 1.8)
 
 - Since we're going to use JDK8, which yields even better performance, we'll be using JDK8-optimised version of some Quasar and Comsat artifacts, so let's add the `ext.classifier = ':jdk8'` property to `gradle/user-props.gradle`, we're going to use it shortly.
 
@@ -215,11 +215,15 @@ svn export https://github.com/puniverse/comsat-gradle-template
 
   - The Tomcat webapp context `src/main/webapp/META-INF/context.xml` will require two additions:
 
-    - First of all, Quasar instrumentation in the form of a dedicated Tomcat classloader:
+    - First of all, Quasar instrumentation in the form of a dedicated Tomcat classloader.
+
+    - Then, the Comsat fiber-enabled wrapping datasource for the application.
 
   - We'll need to update the `web.xml` descriptor too, in case we use descriptor-based setup, since we renamed quite few things and we need to use the Comsat Jersey implementation, which also requires async support to be enabled by the container:
 
   - Finally, since we changed servlet mappings for clarity, let's update the URLs used by integration tests in `WebAppIT` from `/thread`-something to `/fiber-`something.
+
+(Disable runaway fibers detection)
 
 - Let's now re-run out integration tests:
 
