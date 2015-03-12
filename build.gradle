@@ -29,18 +29,20 @@ configurations.all {
     resolutionStrategy {
         failOnVersionConflict()
         force "com.google.guava:guava:$guavaVer"
+
         force "com.fasterxml.jackson.core:jackson-core:$jacksonVer"
         force "com.fasterxml.jackson.core:jackson-databind:$jacksonVer"
         force "com.fasterxml.jackson.core:jackson-annotations:$jacksonVer"
         force "com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:$jacksonVer"
         force "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:$jacksonVer"
 
-        force "xml-apis:xml-apis:1.3.03"
+        force "org.slf4j:slf4j-api:$slf4jVer"
+        force "xml-apis:xml-apis:$xmlAPIsVer"
     }
 }
 
 repositories {
-//    mavenLocal()
+    mavenLocal()
     mavenCentral()
 //    maven { url "https://oss.sonatype.org/content/repositories/releases" }
 //    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
@@ -64,8 +66,6 @@ test {
 
 dependencies {
     compile "com.h2database:h2:$h2Ver"
-    compile "com.squareup.dagger:dagger:$daggerVer"
-    compile "com.squareup.dagger:dagger-compiler:$daggerVer"
     compile "org.glassfish.jersey.core:jersey-server:$jerseyVer"
     compile "co.paralleluniverse:comsat-jersey-server:$comsatVer"
     compile "com.netflix.feign:feign-core:$feignVer"
@@ -76,14 +76,9 @@ dependencies {
         exclude group: 'com.fasterxml.jackson.core', module: 'jackson-databind'
     }
     compile "org.glassfish.jersey.media:jersey-media-json-jackson:$jerseyVer"
-    // Exclude Jersey 1.x's runtime by default, Tomcat uses 2.x
     compile "co.paralleluniverse:comsat-jdbi:$comsatVer"
-    compile ("co.paralleluniverse:comsat-dropwizard:$comsatVer") {
-        exclude group: 'com.sun.jersey', module: '*'
-    }
-    compile ("io.dropwizard:dropwizard-core:$dropwizardVer") {
-        exclude group: 'com.sun.jersey', module: '*'
-    }
+    compile "co.paralleluniverse:comsat-dropwizard:$comsatVer"
+    compile "io.dropwizard:dropwizard-core:$dropwizardVer"
     compile "co.paralleluniverse:quasar-core:$quasarVer"
     compile "co.paralleluniverse:comsat-jdbc:$comsatVer"
 
