@@ -102,7 +102,7 @@ public class Main extends io.dropwizard.Application<Main.JModernConfiguration> {
         @GET
         public String consume() {
             Saying saying = helloWorld.hi("consumer");
-            return String.format("The service is saying: %s (id: %d)",  saying.getContent(), saying.getId());
+            return String.format("The service is saying: %s (id: %d)", saying.getContent(), saying.getId());
         }
     }
 
@@ -117,7 +117,8 @@ public class Main extends io.dropwizard.Application<Main.JModernConfiguration> {
             try (Handle h = idbi.open()) {
                 h.execute("create table something (id int primary key auto_increment, name varchar(100))");
                 String[] names = { "Gigantic", "Bone Machine", "Hey", "Cactus" };
-                Arrays.stream(names).forEach(name -> h.insert("insert into something (name) values (?)", name));
+                for (int i = 0 ; i < names.length ; i++)
+                    h.insert("insert into something (name) values (?)", names[i]);
             }
         }
 
