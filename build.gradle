@@ -66,7 +66,6 @@ test {
 
 dependencies {
     compile "com.h2database:h2:$h2Ver"
-    compile "org.glassfish.jersey.core:jersey-server:$jerseyVer"
     compile "co.paralleluniverse:comsat-jersey-server:$comsatVer"
     compile "com.netflix.feign:feign-core:$feignVer"
     compile ("com.netflix.feign:feign-jaxrs:$feignVer") {
