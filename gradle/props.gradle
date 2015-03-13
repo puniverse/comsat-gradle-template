@@ -12,4 +12,3 @@ ext.junitVer        = '4.12'
 
 ext.guavaVer        = '18.0'
 ext.jacksonVer      = '2.3.3'
-
