@@ -169,6 +169,7 @@ public class Main extends FiberApplication<Main.JModernConfiguration> {
     }
 
     public static class SomethingMapper implements ResultSetMapper<Something> {
+        @Suspendable
         public Something map(int index, ResultSet r, StatementContext ctx) throws SQLException {
             return new Something(r.getInt("id"), r.getString("name"));
         }

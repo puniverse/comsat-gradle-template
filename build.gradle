@@ -38,11 +38,19 @@ configurations.all {
 
         force "org.slf4j:slf4j-api:$slf4jVer"
         force "xml-apis:xml-apis:$xmlAPIsVer"
+
+        force "io.dropwizard.metrics:metrics-core:$metricsVer"
+        force "org.jdbi:jdbi:$jdbiVer"
+        force "org.glassfish.jersey.core:jersey-server:$jerseyVer"
+        force "org.glassfish.jersey.core:jersey-client:$jerseyVer"
+        force "org.glassfish.jersey.core:jersey-common:$jerseyVer"
+        force "org.glassfish.jersey.containers:jersey-container-servlet:$jerseyVer"
+        force "org.apache.httpcomponents:httpcore:$httpCoreVer"
     }
 }
 
 repositories {
-//    mavenLocal()
+    mavenLocal()
     mavenCentral()
 //    maven { url "https://oss.sonatype.org/content/repositories/releases" }
 //    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
@@ -91,7 +99,7 @@ dependencies {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.3'
+    gradleVersion = '2.4'
 }
 
 defaultTasks 'compile'
