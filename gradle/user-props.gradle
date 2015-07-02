@@ -3,8 +3,8 @@ version             = '0.1.0-SNAPSHOT'
 status              = 'integration'
 description         = 'TODO - Pls. edit - Gradle bootstrap project for Comsat'
 
-ext.tomcat7Ver      = '7.0.59'
-ext.tomcat8Ver      = '8.0.20'
+ext.tomcat7Ver      = '7.0.62'
+ext.tomcat8Ver      = '8.0.23'
 ext.containerPort   = 8080
 
 sourceCompatibility = 1.8     // 1.7
