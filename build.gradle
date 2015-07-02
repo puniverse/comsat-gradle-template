@@ -35,6 +35,10 @@ configurations.all {
         force "com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:$jacksonVer"
         force "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:$jacksonVer"
 
+        force "org.glassfish.jersey.core:jersey-common:$jerseyVer"
+        force "org.glassfish.jersey.core:jersey-server:$jerseyVer"
+        force "org.glassfish.jersey.containers:jersey-container-servlet:$jerseyVer"
+
         force "org.slf4j:slf4j-api:$slf4jVer"
         force "xml-apis:xml-apis:$xmlAPIsVer"
     }
